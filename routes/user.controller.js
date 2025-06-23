@@ -7,19 +7,29 @@ const Code = require('../models/code.model');
 const nodemailer = require('nodemailer');
 const fs = require('fs').promises;
 const path =require('path');
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth:{
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
-    }
-});
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     host: "smtp.gmail.com",
+//     port: 587,
+//     secure: false,
+//     auth:{
+//         user: process.env.EMAIL,
+//         pass: process.env.PASSWORD
+//     }
+// });
 
 
 router.post('/addUserCode',async(req,res)=>{
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth:{
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+    });
     const {name,age,email,login,password,confirmPassword} = req.body;
     console.log(process.env.EMAIL,process.env.PASSWORD);
 
