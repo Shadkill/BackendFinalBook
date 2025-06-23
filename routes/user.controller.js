@@ -67,7 +67,7 @@ router.post('/addUserCode',async(req,res)=>{
             email: email,
             code: codeHash,
         });
-       const templatePath = path.join(__dirname, '../templates/emailProtected.html');
+       const templatePath = path.join(__dirname, '/templates/emailProtected.html');
                    let htmlTemplate = await fs.readFile(templatePath, 'utf-8');
                    htmlTemplate = htmlTemplate.replace('{{CODE}}', resetCode);
                    const mailOptions = {
