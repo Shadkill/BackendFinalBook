@@ -8,7 +8,6 @@ const nodemailer = require('nodemailer');
 const fs = require('fs').promises;
 const path =require('path');
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -67,7 +66,7 @@ router.post('/addUserCode',async(req,res)=>{
             email: email,
             code: codeHash,
         });
-       const templatePath = path.join(__dirname, '/../templates/BanBook.html');
+       const templatePath = path.join(__dirname, '/../templates/emailProtected.html');
                    let htmlTemplate = await fs.readFile(templatePath, 'utf-8');
                    htmlTemplate = htmlTemplate.replace('{{CODE}}', resetCode);
                    const mailOptions = {
