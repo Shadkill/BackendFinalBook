@@ -5,11 +5,7 @@ services:
     build:
       context: ./
     ports:
-<<<<<<< HEAD
       - 5000:5000
-=======
-    - 5000:5000
->>>>>>> 2814e6c7fe40e5c437d06a3d30b3ff1637942795
     volumes:
       - "backend_uploads:/app/uploads"
 
