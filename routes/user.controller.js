@@ -10,8 +10,8 @@ const path =require('path');
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth:{
         user: process.env.EMAIL,
         pass: process.env.PASSWORD
@@ -20,8 +20,7 @@ const transporter = nodemailer.createTransport({
 
 
 router.post('/addUserCode',async(req,res)=>{
-    const {name,age,email,login,password,confirmPassword} = req.body;
-    console.log(process.env.EMAIL,process.env.PASSWORD);
+    const {name,age,email,login,password,confirmPassword} = req.body; 
 
     const userExists  = await User.findOne({email,login});
     if(userExists){
@@ -57,6 +56,7 @@ router.post('/addUserCode',async(req,res)=>{
     const codeExists = await Code.findOne({
         email: email,
     });
+    console.log(email);
     if(codeExists)
         await Code.deleteOne({
             email: email,
@@ -74,18 +74,11 @@ router.post('/addUserCode',async(req,res)=>{
                        from: `"Потрясающая книга"${process.env.EMAIL}`,
                        to: email,
                        subject: 'Подтверждения почты',
-                    //    html: htmlTemplate, // Добавлен HTML-контент
+                       html: htmlTemplate, // Добавлен HTML-контент
                        text: `Ваш код для подтверждения почты: ${resetCode}`
                    };
-        transporter.sendMail(mailOptions, (error,info)=>{
-            if (error) {
-                console.error('Ошибка при отправке письма:', error);
-                return res.status(500).json({ message: 'Ошибка при отправке письма' });
-            }
-            console.log('Письмо отправлено:', info.response);
-            return res.status(200).json({message: "Код отправлен на вашу почту"});
-        })
-    
+       await transporter.sendMail(mailOptions);
+    return res.status(200).json({message:'Код отправлен на вашу электронную почту!'})
 });
 router.post('/addUser', async(req,res)=>{
     const {name,age,email,login,password,confirmPassword,code} = req.body;
