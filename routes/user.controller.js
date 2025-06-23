@@ -10,8 +10,8 @@ const path =require('path');
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth:{
         user: process.env.EMAIL,
         pass: process.env.PASSWORD
@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 
 router.post('/addUserCode',async(req,res)=>{
     const {name,age,email,login,password,confirmPassword} = req.body;
-    console.log(req.body);
+    console.log(process.env.EMAIL,process.env.PASSWORD);
 
     const userExists  = await User.findOne({email,login});
     if(userExists){
