@@ -9,8 +9,9 @@ const fs = require('fs').promises;
 const path =require('path');
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    tls: "TLSv1.2",
+    secure: false,
     auth:{
         user: process.env.EMAIL,
         pass: process.env.PASSWORD
